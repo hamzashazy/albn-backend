@@ -3,13 +3,13 @@ const Program = require('../models/ProgramModel');
 // @desc    Create new program
 const createProgram = async (req, res) => {
   try {
-    const { title, details, startDate } = req.body;
+    const { title, details, startDate, campus } = req.body;
 
-    if (!title || !details || !startDate) {
+    if (!title || !details || !startDate || !campus) {
       return res.status(400).json({ message: 'Required fields missing' });
     }
 
-    const program = await Program.create({ title, details, startDate });
+    const program = await Program.create({ title, details, startDate, campus });
     res.status(201).json(program);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -19,7 +19,7 @@ const createProgram = async (req, res) => {
 // @desc    Get all programs
 const getPrograms = async (req, res) => {
   try {
-    const programs = await Program.find().sort({ createdAt: -1 });
+    const programs = await Program.find().sort({ createdAt: -1 }).populate('campus', 'name');
     res.status(200).json(programs);
   } catch (error) {
     res.status(500).json({ message: error.message });

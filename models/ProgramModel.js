@@ -13,6 +13,7 @@ const programSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  campus: { type: mongoose.Schema.Types.ObjectId,ref: 'Campus', required: true},
   createdAt: {
     type: Date,
     default: Date.now
