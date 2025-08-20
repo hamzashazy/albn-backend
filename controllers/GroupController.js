@@ -4,7 +4,7 @@ const Admin = require('../models/AdminModel');
 // Get all groupes
 const getGroups = async (req, res) => {
   try {
-    const groupes = await Group.find();
+    const groupes = await Group.find().populate('campus', 'name');
     res.status(200).json(groupes);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching groupes: ' + error.message });
@@ -14,7 +14,7 @@ const getGroups = async (req, res) => {
 // Get only active groupes (isDeleted: false)
 const getActiveGroups = async (req, res) => {
   try {
-    const groupes = await Group.find({ isDeleted: false });
+    const groupes = await Group.find({ isDeleted: false }).populate('campus', 'name');
     res.status(200).json(groupes);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching active groupes: ' + error.message });

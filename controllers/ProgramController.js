@@ -68,7 +68,7 @@ const createStudentfromAdmin = async (req, res) => {
 // Get only active programs (isDeleted: false)
 const getActivePrograms = async (req, res) => {
   try {
-    const programs = await Program.find({ isDeleted: false });
+    const programs = await Program.find({ isDeleted: false }).populate('campus', 'name');
     res.status(200).json(programs);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching active programs: ' + error.message });
