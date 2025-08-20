@@ -1,4 +1,5 @@
 const Program = require('../models/ProgramModel');
+const Admin = require('../models/AdminModel');
 
 // @desc    Create new program
 const createProgram = async (req, res) => {
@@ -28,7 +29,7 @@ const getPrograms = async (req, res) => {
 
 const getProgramsByCampus = async (req, res, next) => {
   try {
-    const campusId = req.Program?.campus; // ✅ match middleware
+    const campusId = req.Admin?.campus; // ✅ match middleware
 
     if (!campusId) {
       return res.status(400).json({ message: 'Campus not assigned to user' });
