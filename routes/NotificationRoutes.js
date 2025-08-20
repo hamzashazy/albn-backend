@@ -9,7 +9,7 @@ const {
   restoreNotification,
   getActiveNotifications
 } = require('../controllers/NotificationController');
-const { protectBoth } = require('../middleware/authMiddleware');
+const { protectBoth, protect } = require('../middleware/authMiddleware');
 
 router.get('/',protect,  getNotifications);
 router.get('/active',protectBoth, getActiveNotifications);
