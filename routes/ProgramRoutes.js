@@ -8,7 +8,8 @@ const {
   updateProgram,
   deleteProgram,
   restoreProgram,
-  getActivePrograms
+  getActivePrograms,
+  getProgramsByCampus
 } = require('../controllers/ProgramController');
 
 // All routes are protected
@@ -17,6 +18,7 @@ router.get('/', protect, getPrograms);
 router.get('/active', getActivePrograms);
 router.put('/:id', protect, updateProgram);
 router.get('/:id', protect, getProgramById);
+router.get('/bycampus',protectBoth,getProgrmasByCampus);
 router.delete('/:id', protect, deleteProgram);
 router.put('/restore/:id', protect, restoreProgram);
 

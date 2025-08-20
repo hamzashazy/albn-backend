@@ -26,6 +26,24 @@ const getPrograms = async (req, res) => {
   }
 };
 
+const getProgramsByCampus = async (req, res, next) => {
+  try {
+    const campusId = req.Admin?.campus; // ✅ match middleware
+
+    if (!campusId) {
+      return res.status(400).json({ message: 'Campus not assigned to user' });
+    }
+
+    const programs = await Program.find({ campus: campusId })
+      .populate('campus', 'name')
+
+    res.status(200).json(programs);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 // Get only active programs (isDeleted: false)
 const getActivePrograms = async (req, res) => {
   try {
@@ -116,5 +134,6 @@ module.exports = {
   updateProgram,
   deleteProgram,
   restoreProgram,
+  getProgramsByCampus,
   getActivePrograms
 };
