@@ -1,5 +1,5 @@
 const express = require('express');
-const { protect } = require('../middleware/authMiddleware');
+const { protect, protectBoth } = require('../middleware/authMiddleware');
 const router = express.Router();
 const {
   createProgram,
@@ -13,13 +13,13 @@ const {
 } = require('../controllers/ProgramController');
 
 // All routes are protected
-router.post('/', protect, createProgram);
+router.post('/', protectBoth, createProgram);
 router.get('/', protect, getPrograms);
-router.get('/active', getActivePrograms);
-router.put('/:id', protect, updateProgram);
-router.get('/:id', protect, getProgramById);
-router.get('/bycampus',protectBoth,getProgrmasByCampus);
-router.delete('/:id', protect, deleteProgram);
-router.put('/restore/:id', protect, restoreProgram);
+router.get('/active',protect, getActivePrograms);
+router.put('/:id', protectBoth, updateProgram);
+router.get('/:id', protectBoth, getProgramById);
+router.get('/bycampus',protectBoth,getProgramsByCampus);
+router.delete('/:id', protectBoth, deleteProgram);
+router.put('/restore/:id', protectBoth, restoreProgram);
 
 module.exports = router;
