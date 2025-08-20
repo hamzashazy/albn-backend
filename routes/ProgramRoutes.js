@@ -15,10 +15,10 @@ const {
 // All routes are protected
 router.post('/', protectBoth, createProgram);
 router.get('/', protect, getPrograms);
+router.get('/bycampus',protectBoth,getProgramsByCampus);
 router.get('/active',protect, getActivePrograms);
 router.put('/:id', protectBoth, updateProgram);
 router.get('/:id', protectBoth, getProgramById);
-router.get('/bycampus',protectBoth,getProgramsByCampus);
 router.delete('/:id', protectBoth, deleteProgram);
 router.put('/restore/:id', protectBoth, restoreProgram);
 
