@@ -11,7 +11,7 @@ const generateToken = (id) => {
 // @desc   Get all admins (excluding passwords)
 const getAdmins = async (req, res, next) => {
   try {
-    const admins = await Admin.find().select('-password').populate('campus', 'name');
+    const admins = await Admin.find().populate('campus', 'name');
     res.status(200).json(admins);
   } catch (err) {
     next(err);
