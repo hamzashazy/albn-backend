@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { registerStudent, loginStudent, getStudents,getActiveStudents,getStudentsByCampus, getStudentById, updateStudent, deleteStudent, restoreStudent, registerStudentfromAdmin } 
 = require('../controllers/StudentController');
-const { protectBoth } = require('../middleware/authMiddleware');
+const { protectBoth,protect } = require('../middleware/authMiddleware');
 
 router.post('/register',protectBoth, registerStudent);
 router.post('/registersfa',protectBoth, registerStudentfromAdmin);
 router.post('/login', loginStudent);
-router.get('/',protectBoth,getStudents);
-router.get('/active',protectBoth, getActiveStudents);
+router.get('/',protect,getStudents);
+router.get('/active',protect, getActiveStudents);
 router.get('/bycampus',protectBoth,getStudentsByCampus);
 router.get('/:id',protectBoth, getStudentById);
 router.put('/:id',protectBoth, updateStudent);

@@ -9,6 +9,7 @@ const superAdminRoutes = require('../routes/superAdminRoutes');
 const ProgramRoutes = require('../routes/ProgramRoutes');
 const CampusRoutes = require('../routes/CampusRoutes');
 const GroupRoutes = require('../routes/GroupRoutes');
+const NotificationRoutes = require('../routes/NotificationRoutes');
 const errorHandler = require('../middleware/errorHandler');
 const cors = require('cors');
 const serverless = require('serverless-http'); // 👈 required for Vercel
@@ -36,6 +37,7 @@ app.use('/api/superadmin', superAdminRoutes);
 app.use('/api/campus', CampusRoutes);
 app.use('/api/program', ProgramRoutes);
 app.use('/api/group', GroupRoutes);
+app.use('/api/notification', NotificationRoutes);
 
 app.use(errorHandler);
 
