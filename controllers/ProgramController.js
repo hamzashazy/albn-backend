@@ -44,6 +44,26 @@ const getProgramsByCampus = async (req, res, next) => {
   }
 };
 
+const createStudentfromAdmin = async (req, res) => {
+  try {
+    // Find the logged-in admin
+    const admin = await Admin.findById(req.Admin._id).select('campus');
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+
+    // Force campus to admin's campus
+    req.body.campus = admin.campus;
+
+    const program = await Program.create(req.body);
+
+    res.status(201).json(program);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+
 
 // Get only active programs (isDeleted: false)
 const getActivePrograms = async (req, res) => {
@@ -136,5 +156,6 @@ module.exports = {
   deleteProgram,
   restoreProgram,
   getProgramsByCampus,
-  getActivePrograms
+  getActivePrograms,
+  createStudentfromAdmin,
 };

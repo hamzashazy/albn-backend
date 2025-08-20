@@ -1,4 +1,5 @@
 const Group = require('../models/GroupModel');
+const Admin = require('../models/AdminModel');
 
 // Get all groupes
 const getGroups = async (req, res) => {
@@ -57,6 +58,43 @@ const createGroup = async (req, res) => {
     res.status(500).json({ message: 'Error creating group: ' + error.message });
   }
 };
+
+const getGroupsByCampus = async (req, res, next) => {
+  try {
+    const campusId = req.Admin?.campus; // ✅ match middleware
+
+    if (!campusId) {
+      return res.status(400).json({ message: 'Campus not assigned to user' });
+    }
+
+    const groups = await Group.find({ campus: campusId })
+      .populate('campus', 'name')
+
+    res.status(200).json(groups);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const createGroupfromAdmin = async (req, res) => {
+  try {
+    // Find the logged-in admin
+    const admin = await Admin.findById(req.Admin._id).select('campus');
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+
+    // Force campus to admin's campus
+    req.body.campus = admin.campus;
+
+    const group = await Group.create(req.body);
+
+    res.status(201).json(group);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 
 // Update group
 const updateGroup = async (req, res) => {
@@ -130,5 +168,7 @@ module.exports = {
   updateGroup,
   deleteGroup,
   restoreGroup,
-  getActiveGroups, // <-- Add this
+  getActiveGroups,
+  getGroupsByCampus,
+  createGroupfromAdmin, // <-- Add this
 };

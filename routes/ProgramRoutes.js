@@ -9,11 +9,13 @@ const {
   deleteProgram,
   restoreProgram,
   getActivePrograms,
-  getProgramsByCampus
+  getProgramsByCampus,
+  createStudentfromAdmin,
 } = require('../controllers/ProgramController');
 
 // All routes are protected
 router.post('/', protectBoth, createProgram);
+router.post('/createsfa',protectBoth, createStudentfromAdmin);
 router.get('/', protect, getPrograms);
 router.get('/bycampus',protectBoth,getProgramsByCampus);
 router.get('/active',protect, getActivePrograms);

@@ -7,13 +7,17 @@ const {
   deleteGroup,
   getGroupById,
   restoreGroup,
-  getActiveGroups
+  getActiveGroups,
+  getGroupsByCampus,
+  createGroupfromAdmin // <-- Add this
 } = require('../controllers/GroupController');
 const { protectBoth } = require('../middleware/authMiddleware');
 
 router.get('/',protectBoth,  getGroups);
 router.get('/active', getActiveGroups);
+router.get('/bycampus',protectBoth,getGroupsByCampus);
 router.post('/',protectBoth, createGroup);
+router.post('/createsfa',protectBoth, createGroupfromAdmin);
 router.get('/:id',protectBoth, getGroupById);
 router.put('/:id',protectBoth, updateGroup);
 router.delete('/:id',protectBoth, deleteGroup);

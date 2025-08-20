@@ -12,6 +12,7 @@ const GroupSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  campus: { type: mongoose.Schema.Types.ObjectId,ref: 'Campus', required: true},
   isDeleted: { type: Boolean, default: false},
 }, {
   timestamps: true
