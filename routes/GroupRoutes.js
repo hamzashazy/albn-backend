@@ -14,7 +14,7 @@ const {
 const { protectBoth } = require('../middleware/authMiddleware');
 
 router.get('/',protectBoth,  getGroups);
-router.get('/active', getActiveGroups);
+router.get('/active',protectBoth, getActiveGroups);
 router.get('/bycampus',protectBoth,getGroupsByCampus);
 router.post('/',protectBoth, createGroup);
 router.post('/createsfa',protectBoth, createGroupfromAdmin);

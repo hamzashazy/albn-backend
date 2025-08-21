@@ -9,10 +9,10 @@ const {
   restoreCampus,
   getActiveCampuses
 } = require('../controllers/CampusController');
-const { protect } = require('../middleware/authMiddleware');
+const { protect, protectBoth } = require('../middleware/authMiddleware');
 
 router.get('/', protect, getCampuses);
-router.get('/active', getActiveCampuses);
+router.get('/active',protectBoth, getActiveCampuses);
 router.post('/', protect, createCampus);
 router.get('/:id',protect, getCampusById);
 router.put('/:id', protect, updateCampus);

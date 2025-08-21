@@ -18,7 +18,7 @@ router.post('/', protectBoth, createProgram);
 router.post('/createsfa',protectBoth, createStudentfromAdmin);
 router.get('/', protect, getPrograms);
 router.get('/bycampus',protectBoth,getProgramsByCampus);
-router.get('/active',protect, getActivePrograms);
+router.get('/active',protectBoth, getActivePrograms);
 router.put('/:id', protectBoth, updateProgram);
 router.get('/:id', protectBoth, getProgramById);
 router.delete('/:id', protectBoth, deleteProgram);
