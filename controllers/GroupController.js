@@ -41,9 +41,9 @@ const getGroupById = async (req, res) => {
 // Create new group
 const createGroup = async (req, res) => {
   try {
-    const { name, murabbi } = req.body;
+    const { name, murabbi, campus } = req.body;
 
-    if (!name || !murabbi) {
+    if (!name || !murabbi || !campus) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -52,7 +52,7 @@ const createGroup = async (req, res) => {
       return res.status(400).json({ message: 'Group already exists' });
     }
 
-    const newGroup = await Group.create({ name, murabbi });
+    const newGroup = await Group.create({ name, murabbi, campus });
     res.status(201).json(newGroup);
   } catch (error) {
     res.status(500).json({ message: 'Error creating group: ' + error.message });
@@ -96,31 +96,22 @@ const createGroupfromAdmin = async (req, res) => {
 };
 
 
-// Update group
+// @desc    Update program
 const updateGroup = async (req, res) => {
   try {
-    const { name, murabbi } = req.body;
-    const groupId = req.params.id;
+    const { id } = req.params;
+    const updated = await Group.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true
+    });
 
-    const group = await Group.findById(groupId);
-    if (!group) {
+    if (!updated) {
       return res.status(404).json({ message: 'Group not found' });
     }
 
-    if (name && name !== group.name) {
-      const existingGroup = await Group.findOne({ name });
-      if (existingGroup) {
-        return res.status(400).json({ message: 'Group name already exists' });
-      }
-    }
-
-    group.name = name || group.name;
-    group.murabbi = murabbi || group.murabbi;
-
-    const updatedGroup = await group.save();
-    res.status(200).json(updatedGroup);
+    res.status(200).json(updated);
   } catch (error) {
-    res.status(500).json({ message: 'Error updating group: ' + error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
