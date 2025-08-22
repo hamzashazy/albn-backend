@@ -54,7 +54,7 @@ const registerAdmin = async (req, res) => {
 const loginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const admin = await Admin.findOne({ email });
+    const admin = await Admin.findOne({ email, isDeleted: false });
 
     if (admin && (await admin.matchPassword(password))) {
       res.json({
