@@ -38,6 +38,7 @@ app.use('/api/campus', CampusRoutes);
 app.use('/api/program', ProgramRoutes);
 app.use('/api/group', GroupRoutes);
 app.use('/api/notification', NotificationRoutes);
+app.use('/api/batch', NotificationRoutes);
 
 app.use(errorHandler);
 
