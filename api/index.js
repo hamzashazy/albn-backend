@@ -10,6 +10,7 @@ const ProgramRoutes = require('../routes/ProgramRoutes');
 const CampusRoutes = require('../routes/CampusRoutes');
 const GroupRoutes = require('../routes/GroupRoutes');
 const NotificationRoutes = require('../routes/NotificationRoutes');
+const BatchRoutes = require('../routes/BatchRoutes');
 const errorHandler = require('../middleware/errorHandler');
 const cors = require('cors');
 const serverless = require('serverless-http'); // 👈 required for Vercel
@@ -38,7 +39,7 @@ app.use('/api/campus', CampusRoutes);
 app.use('/api/program', ProgramRoutes);
 app.use('/api/group', GroupRoutes);
 app.use('/api/notification', NotificationRoutes);
-app.use('/api/batch', NotificationRoutes);
+app.use('/api/batch', BatchRoutes);
 
 app.use(errorHandler);
 
