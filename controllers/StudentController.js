@@ -15,7 +15,8 @@ const getStudents = async (req, res, next) => {
     const students = await Student.find().select('-password')
       .populate('campus', 'name') 
       .populate('group', 'name')
-      .populate('program', 'title');
+      .populate('program', 'title')
+      .populate('batch', 'name');
 ;
     res.status(200).json(students);
   } catch (err) {
@@ -35,7 +36,8 @@ const getStudentsByCampus = async (req, res, next) => {
       .select('-password')
       .populate('campus', 'name')
       .populate('group', 'name')
-      .populate('program', 'title');
+      .populate('program', 'title')
+      .populate('batch', 'name');
 
     res.status(200).json(students);
   } catch (err) {
@@ -57,7 +59,8 @@ const getActiveStudents = async (req, res, next) => {
       .select('-password')
       .populate('campus', 'name')
       .populate('group', 'name')
-      .populate('program', 'title');
+      .populate('program', 'title')
+      .populate('batch', 'name');
 
     res.status(200).json(students);
   } catch (err) {
@@ -69,10 +72,10 @@ const getActiveStudents = async (req, res, next) => {
 // @desc   Register new student
 const registerStudent = async (req, res) => {
   try {
-    const { name, email, password, campus, program, group } = req.body;
+    const { name, email, password, campus, program, group, batch } = req.body;
 
     // Validate input
-    if (!name || !email || !password || !campus || !program || !group) {
+    if (!name || !email || !password || !campus || !program || !group || !batch) {
       return res.status(400).json({ message: 'Please provide all relevant details' });
     }
 
@@ -83,7 +86,7 @@ const registerStudent = async (req, res) => {
     }
 
     // Create new student
-    const student = await Student.create({ name, email, password, campus, program, group });
+    const student = await Student.create({ name, email, password, campus, program, group, batch });
 
     res.status(201).json({
       _id: student._id,
@@ -92,6 +95,7 @@ const registerStudent = async (req, res) => {
       campus: student.campus,
       program: student.program,
       group: student.group,
+      batch: student.batch,
       token: generateToken(student._id),
     });
   } catch (error) {
@@ -132,6 +136,7 @@ const loginStudent = async (req, res) => {
         campus: student.campus,
         program: student.program,
         group: student.group,
+        batch: student.batch,
         token: generateToken(student._id),
       });
     } else {
@@ -164,13 +169,14 @@ const updateStudent = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    const { name, email, password, campus, program, group } = req.body;
+    const { name, email, password, campus, program, group, batch } = req.body;
 
     if (name) student.name = name;
     if (email) student.email = email;
     if (campus) student.campus = campus;
     if (program) student.program = program;
     if (group) student.group = group;
+    if (batch) student.batch = batch;
     if (password) student.password = password;
 
     const updatedStudent = await student.save();
@@ -182,6 +188,7 @@ const updateStudent = async (req, res) => {
       campus: updatedStudent.campus,
       program: updatedStudent.program,
       group: updatedStudent.group,
+      batch: updatedStudent.batch,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -8,6 +8,7 @@ const StudentSchema = new mongoose.Schema({
   campus:  { type: mongoose.Schema.Types.ObjectId, ref: 'Campus', required: true }, 
   program: { type: mongoose.Schema.Types.ObjectId, ref: 'Program', required: true },
   group:   { type: mongoose.Schema.Types.ObjectId, ref: 'Group', required: true},
+  batch:   { type: mongoose.Schema.Types.ObjectId, ref: 'Batch', required: true},
   isDeleted: { type: Boolean, default: false},
   
   createdAt: { type: Date, default: Date.now }
