@@ -19,7 +19,7 @@ const createBatch = async (req, res) => {
 // @desc    Get all batches
 const getBatches = async (req, res) => {
   try {
-    const batches = await Batch.find().sort({ createdAt: -1 }).populate('campus', 'name').populate('program', 'name');
+    const batches = await Batch.find().sort({ createdAt: -1 }).populate('campus', 'name').populate('program', 'title');
     res.status(200).json(batches);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -34,7 +34,7 @@ const getBatchesByCampus = async (req, res, next) => {
       return res.status(400).json({ message: 'Campus not assigned to user' });
     }
 
-    const batches = await Batch.find({ campus: campusId }).populate('campus', 'name').populate('program', 'name');
+    const batches = await Batch.find({ campus: campusId }).populate('campus', 'name').populate('program', 'title');
 
     res.status(200).json(batches);
   } catch (err) {
@@ -45,7 +45,7 @@ const getBatchesByCampus = async (req, res, next) => {
 // Get only active batches (isDeleted: false)
 const getActiveBatches = async (req, res) => {
   try {
-    const batches = await Batch.find({ isDeleted: false }).populate('campus', 'name').populate('program', 'name');
+    const batches = await Batch.find({ isDeleted: false }).populate('campus', 'name').populate('program', 'title');
     res.status(200).json(batches);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching active batches: ' + error.message });
